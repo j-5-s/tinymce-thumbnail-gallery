@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#gallery_dlg.title}</title>
+        <script type="text/javascript" src="../../../../../wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+	
+	<script type="text/javascript" src="../../../../../wp-includes/js/tinymce/utils/form_utils.js"></script>
+	<script type="text/javascript" src="../../../../../wp-includes/js/tinymce/utils/validate.js"></script>
+	<script type="text/javascript" src="../../../../../wp-includes/js/tinymce/utils/editable_selects.js"></script>
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.5.custom.min.js"></script>
+        <script type="text/javascript" src="js/gallery.js"></script>
+        <script type="text/javascript" src="../../includes/farbtastic/farbtastic.js"></script>
+	
+        <link href="css/gallery.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="../../includes/farbtastic/farbtastic.css" type="text/css" />
+</head>
+<body id="gallery">
+    <a id="delete" href="#" onclick="GalleryDialog.deleteGallery();return false">Delete Gallery</a>
+    
+<form onsubmit="GalleryDialog.insert();return false;" action="#">
+   
+    <p>Add as many images as you like to create your image gallery</p>
+        
+         <div id="gallery_form">
+            
+             <label for="width">Thumbnail Width</label> <input type="text" name="width" id="width" value="100" style="width:30px" />px <label for="height">Height</label> <input type="text" name="height" id="height" value="80" style="width:30px"/>px
+             <input type="hidden" name="is_edit" value="0" id="is_edit" />
+              <label for="color">Border Color</label> <input type="text" id="color" name="color" value="#CCCCCC" /><div class="hide-picker" id="picker"></div>
+
+             <div class="image_wrapper">
+             <div class="image">
+                 <a class="close" href="#" onclick="GalleryDialog.removeImage(this);return false">Remove Image</a>
+
+                 <table class="image_insert">
+
+                     <tr style="display:none;">
+                         <th>
+                             Source
+                         </th>
+                         <td>
+                             <input name="src[]" class="field src" type="text" id="src" value="" />
+                         </td>
+                     </tr>
+                     <tr>
+                         <th>Media Library</th>
+                         <td>
+
+                            <select id="src_list" name="src_list[]" class="field mceFocus src_list" onchange="jQuery(this).parent().parent().parent().children().children('td').children('input[name=src\[\]]').attr('value',this.options[this.selectedIndex].value);jQuery(this).parent().parent().parent().children().children('td').children('input[name=title\[\]]').attr('value',this.options[this.selectedIndex].text);GalleryDialog.previewImage(this,0,0)"><option value=""></option></select>
+                         </td>
+                     </tr>
+                     <tr>
+                         <th>Title Text</th>
+                         <td><input id="alt" name="alt[]" class="field alt" type="text" value="" /></td>
+
+                     </tr>
+                    
+                 </table>
+                 <div class="image_preview">
+                     
+                 </div>
+                 <div class="clear"></div>
+                 <input type="hidden" class="x field" name="x[]" id="x" value="0" />
+                 <input type="hidden" class="y field" name="y[]" id="y" value="0" />
+             </div>
+             </div>
+         </div>
+
+        <div id="srcbrowsercontainer"></div>
+         <div class="add_new"><a href="#" onclick="GalleryDialog.addImage();return false;">+ Add Another Image</a></div>
+	<div class="mceActionPanel">
+		<div style="float: left">
+			<input type="button" id="insert" name="insert" value="Insert" onclick="GalleryDialog.insert();" />
+		</div>
+
+		<div style="float: right">
+			<input type="button" id="cancel" name="cancel" value="Cancel" onclick="tinyMCEPopup.close();" />
+                        
+		</div>
+	</div>
+         <br />
+</form>
+
+</body>
+</html>
+<script type="text/javascript">
+
+jQuery(document).ready(function(){
+
+
+
+    jQuery("#width").live("change",function(){
+         
+         jQuery(".image_preview").each(function(){
+           
+            jQuery(this).children("a").css({"width":jQuery("#width").val()+"px"})
+         })
+    })
+
+    jQuery("#height").live("change",function(){
+         jQuery(".image_preview").each(function(){
+            jQuery(this).children("a").css({"height":jQuery("#height").val()+"px"})
+            var height = parseFloat(jQuery("#height").val())+10;
+            console.log(height);
+            jQuery(".image").css({"height":height+"px"})
+         })
+    })
+
+    
+        jQuery('#picker').farbtastic('#color')
+        jQuery('#color').focus(function(){
+            jQuery("#picker").addClass("show-picker")
+            jQuery("#picker").removeClass("hide-picker")
+        })
+        jQuery('#color').blur(function(){
+            jQuery("#picker").addClass("hide-picker")
+            jQuery("#picker").removeClass("show-picker")
+        })
+    
+
+
+
+});
+</script>

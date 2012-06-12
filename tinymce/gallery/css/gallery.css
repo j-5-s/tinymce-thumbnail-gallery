@@ -1,0 +1,17 @@
+#gallery {}
+.clear {clear:both;}
+table.image_insert th {text-align:left;}
+table.image_insert {float:left;}
+div.image  {border:1px solid #999;background-color:#ccc;margin:5px 0;}
+div.add_new {text-align:right;font-size:9px;}
+a.close {float:right;margin-right:3px;margin-top:3px;}
+div.image_preview {margin-top:3px;margin-left:3px;height:80px;float:left;z-index:10;margin-bottom:5px;}
+div.image_preview span {font-size:9px;color:#333;}
+div.image_preview a {overflow:hidden;display:block;z-index:1;height:80px;width:100px;border:1px solid #333;cursor:move;position:relative}
+div.image_preview img {border:none;}
+.field {width:100px;}
+div.mceActionPanel {clear:both;margin-top:5px;}
+#picker {position:absolute;width:200px;background-color:#fff;border:1px solid #ccc;left:200px;z-index:999999;}
+.show-picker {display:block;}
+.hide-picker {display:none;}
+#delete {float:right;}

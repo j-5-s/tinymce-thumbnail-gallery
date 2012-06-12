@@ -1,0 +1,14 @@
+ul.TINYMCE_gallery {
+    background-color:#CCC;
+    border:1px solid #333;
+    padding:10px;
+    margin:0;
+    list-style-type:none;
+    background: #CCC url(../img/gallery.gif) no-repeat top right;
+
+}
+
+ul.TINYMCE_gallery li {
+    margin-bottom:5px;
+}
+ul.TINYMCE_gallery li img {width:200px}
