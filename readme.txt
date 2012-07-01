@@ -10,6 +10,7 @@ This plugin is a simple image gallery built into TinyMCE.  Add media to your gal
 
 == Description ==
 
+
 This plugin is a very simple image gallery that is built into Tinymce (it's a Tinymce plugin I created). My goals was to create a plugin that required no coding skills and would display thumbnails evenly regardless of image size/proportions (default is 100/80, but you can make the thumbnails anysize you want). CSS is used to hide portions of the image outside of the thumbnail size you choose. When you hover over the image, the entire image is shown.
 Built by an <a href="http://www.jamescharlesworth.com">Atlanta SEO</a>.
 

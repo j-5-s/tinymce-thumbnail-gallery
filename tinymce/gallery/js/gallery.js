@@ -1,3 +1,4 @@
+/*globals tinyMCEPopup, jQuery, TinyMCE_EditableSelects, document, tinymce */
 var GalleryDialog = {
 	preInit : function() {
 		var url;
@@ -9,10 +10,10 @@ var GalleryDialog = {
 	},
 		
 	init : function( ) {
-		var f = document.forms[0], 
-			nl = f.elements, 
-			ed = tinyMCEPopup.editor, 
-			dom = ed.dom, 
+		var f = document.forms[0],
+			nl = f.elements,
+			ed = tinyMCEPopup.editor,
+			dom = ed.dom,
 			n = ed.selection.getNode(),
 			li = jQuery( n ).parents("ul.TINYMCE_gallery").children("li"),
 			border = jQuery(n).parents("ul.TINYMCE_gallery").find("a").css("borderColor");
@@ -65,11 +66,11 @@ var GalleryDialog = {
 			jQuery("#gallery_form div.image_wrapper:first").remove();
 
 			jQuery.farbtastic('#picker').setColor(this.borderColorHex(border));
-		} 
+		}
 
 								
 
-		if (n.nodeName == 'IMG') {
+		if (n.nodeName === 'IMG') {
 			nl.src.value = dom.getAttrib(n, 'src');
 												nl.alt.value = dom.getAttrib(n, 'alt');
 			nl.title.value = dom.getAttrib(n, 'title');
@@ -77,29 +78,35 @@ var GalleryDialog = {
 
 		// Setup browse button
 		document.getElementById('srcbrowsercontainer').innerHTML = getBrowserHTML('srcbrowser','src','image','theme_advanced_image');
-		if (isVisible('srcbrowser'))
-			document.getElementById('src').style.width = '260px';		
+		if ( isVisible('srcbrowser') ) {
+			document.getElementById('src').style.width = '260px';
+		}
 	},
 
 	borderColorHex: function( border ) {
-		var re    = new RegExp("rgb\((.*)\)"),
+		var re    = new RegExp("rgb\\((.*)\\)"),
 			m     = re.exec(border),
 			rgb   = m[2].split(","),
 			red   = rgb[0].replace("(",""),
 			green = rgb[1],
-			blue  = rgb[2].replace(")","")
+			blue  = rgb[2].replace(")","");
 
 		return "#"+this.toHex(red) + this.toHex(green)+this.toHex(blue);
 	},
 
 	toHex: function( N ) {
-		if ( typeof N === 'undefined') return "00";
+		if ( typeof N === 'undefined') {
+			return "00";
+		}
 
-		N = parseInt(N); if (N==0 || isNaN(N)) return "00";
-		N =  Math.max(0,N); N=Math.min(N,255); N=Math.round(N);
+		N = parseInt( N, 10 ); if (N === 0 || isNaN(N)) {
+			return "00";
+		}
+		N =  Math.max(0,N);
+		N = Math.min(N,255);
+		N = Math.round(N);
 
-		return "0123456789ABCDEF".charAt((N-N%16)/16)
-				+ "0123456789ABCDEF".charAt(N%16);
+		return "0123456789ABCDEF".charAt((N-N%16)/16) + "0123456789ABCDEF".charAt(N%16);
 	},
 
 
@@ -109,7 +116,7 @@ var GalleryDialog = {
 
 		//not sure what this does
 		if (f.src.value === '') {
-			if (ed.selection.getNode().nodeName == 'IMG') {
+			if (ed.selection.getNode().nodeName === 'IMG') {
 				ed.dom.remove(ed.selection.getNode());
 				ed.execCommand('mceRepaint');
 			}
@@ -118,7 +125,7 @@ var GalleryDialog = {
 			return;
 		}
 
-		if (jQuery("#is_edit").attr("value")==1) {
+		if ( jQuery("#is_edit").attr("value") === 1 ) {
 			//its edit, remove it
 			ed.dom.remove(jQuery(ed.selection.getNode()).parents("div.TINYMCE_gallery_wrapper"));
 		}
@@ -131,8 +138,9 @@ var GalleryDialog = {
 		tinyMCEPopup.restoreSelection();
 
 		// Fixes crash in Safari
-		if (tinymce.isWebKit)
+		if (tinymce.isWebKit) {
 			ed.getWin().focus();
+		}
 
 		if (!ed.settings.inline_styles) {
 			args = {
@@ -162,11 +170,11 @@ var GalleryDialog = {
 		el = ed.selection.getNode();
 							 
 								
-		if (el && el.nodeName == 'IMG') {
+		if (el && el.nodeName === 'IMG') {
 			ed.dom.setAttribs(el, args);
 		} else {
 			var list="";
-			jQuery("input[name=src\[\]]").each(function(){
+			jQuery("input[name=src\\[\\]]").each(function(){
 
 				//get id
 				var id = jQuery(this).attr("id");
@@ -174,13 +182,13 @@ var GalleryDialog = {
 				id = id.replace("src","");
 
 
-				var alt = jQuery(this).parents("div.image_wrapper").find("input.alt").val()
+				var alt = jQuery(this).parents("div.image_wrapper").find("input.alt").val();
 
 
 				//load the preview
 
-				var x = parseInt(jQuery(this).parents("div.image_wrapper").find("input.x").val());
-				var y = parseInt(jQuery(this).parents("div.image_wrapper").find("input.y").val());
+				var x = parseInt(jQuery(this).parents("div.image_wrapper").find("input.x").val(), 10),
+					y = parseInt(jQuery(this).parents("div.image_wrapper").find("input.y").val(), 10);
 
 
 				if (x>-10) {
@@ -189,8 +197,8 @@ var GalleryDialog = {
 				}
 				 
 
-				if (y>-10) {
-					 y=-10
+				if (y > -10) {
+					 y =- 10;
 				}
 					 
 				//load the preview
@@ -204,21 +212,19 @@ var GalleryDialog = {
 			});
 									
 			//create the ul, then add each li
-			var ul = jQuery("<ul> </ul>");
-			if (jQuery(""))
-			var outer_wrapper = jQuery("<div> </div>")
-
-			var wrapper = jQuery("<div> </div>")
+			var ul            = jQuery("<ul> </ul>"),
+				outer_wrapper = jQuery("<div> </div>"),
+				wrapper       = jQuery("<div> </div>");
 
 			jQuery(ul).addClass("TINYMCE_gallery");
 			jQuery(wrapper).addClass("TINYMCE_gallery_wrapper");
 			jQuery(outer_wrapper).append(wrapper);
 			 
-			jQuery(ul).append(list)
+			jQuery(ul).append(list);
 			jQuery(wrapper).append(ul);
 
-			if (jQuery("#is_edit").val()==0) {
-				jQuery(wrapper).after("<p class=\"JC_credit_link\"><!--[TINYMCE_THUMBNAIL_LINK]--></p>")
+			if (jQuery("#is_edit").val() === 0) {
+				jQuery(wrapper).after("<p class=\"JC_credit_link\"><!--[TINYMCE_THUMBNAIL_LINK]--></p>");
 			}
 			ed.execCommand('mceInsertContent', false, jQuery(outer_wrapper).html(), {skip_undo : 1});
 			ed.undoManager.add();
@@ -243,28 +249,31 @@ var GalleryDialog = {
 		if (ed.settings.inline_styles) {
 			switch (at) {
 				case 'align':
-					if (v = dom.getStyle(e, 'float'))
+					v = dom.getStyle(e, 'float');
+					if (v) {
 						return v;
-
-					if (v = dom.getStyle(e, 'vertical-align'))
+					}
+					v = dom.getStyle(e, 'vertical-align');
+					if (v) {
 						return v;
-
+					}
 					break;
 
 				case 'hspace':
-					v = dom.getStyle(e, 'margin-left')
+					v = dom.getStyle(e, 'margin-left');
 					v2 = dom.getStyle(e, 'margin-right');
 
-					if (v && v == v2)
-						return parseInt(v.replace(/[^0-9]/g, ''));
-
+					if (v && v === v2) {
+						return parseInt(v.replace(/[^0-9]/g, ''), 10);
+					}
 					break;
 
 				case 'vspace':
-					v = dom.getStyle(e, 'margin-top')
+					v = dom.getStyle(e, 'margin-top');
 					v2 = dom.getStyle(e, 'margin-bottom');
-					if (v && v == v2)
-						return parseInt(v.replace(/[^0-9]/g, ''));
+					if (v && v === v2) {
+						return parseInt(v.replace(/[^0-9]/g, ''), 10);
+					}
 
 					break;
 
@@ -275,31 +284,37 @@ var GalleryDialog = {
 						sv = dom.getStyle(e, 'border-' + sv + '-width');
 
 						// False or not the same as prev
-						if (!sv || (sv != v && v !== 0)) {
+						if (!sv || (sv !== v && v !== 0)) {
 							v = 0;
 							return false;
 						}
 
-						if (sv)
+						if (sv) {
 							v = sv;
+						}
+							
 					});
 
-					if (v)
-						return parseInt(v.replace(/[^0-9]/g, ''));
+					if (v) {
+						return parseInt(v.replace(/[^0-9]/g, ''),10);
+					}
 
 					break;
 			}
 		}
-
-		if (v = dom.getAttrib(e, at))
+		
+		v = dom.getAttrib(e, at);
+		if (v) {
 			return v;
+		}
+			
 
 		return '';
 	},
 
 	addImage : function() {
 		var ed = tinyMCEPopup.editor, dom = ed.dom, v, v2;
-		select_image = tinyMCEPopup.getParam("select_image")
+		select_image = tinyMCEPopup.getParam("select_image");
 
 
 		var fieldset = jQuery("#gallery_form div.image_wrapper:first").clone();
@@ -310,7 +325,7 @@ var GalleryDialog = {
 		jQuery(fieldset).find(".field").each(function(){
 				var new_id = jQuery(this).attr("id")+'_'+count;
 				jQuery(this).attr("id",new_id);
-				jQuery(this).val("")
+				jQuery(this).val("");
 
 
 		});
@@ -322,42 +337,43 @@ var GalleryDialog = {
 
 	deleteGallery : function() {
 		var ed = tinyMCEPopup.editor;
-		var parent = jQuery(ed.selection.getNode()).parents("div.TINYMCE_gallery_wrapper").parent()
-		ed.dom.remove(jQuery(parent).find(".JC_credit_link"))
+		var parent = jQuery(ed.selection.getNode()).parents("div.TINYMCE_gallery_wrapper").parent();
+		ed.dom.remove(jQuery(parent).find(".JC_credit_link"));
 		ed.dom.remove(jQuery(ed.selection.getNode()).parents("div.TINYMCE_gallery_wrapper"));
 		tinyMCEPopup.close();
 	},
 
 	previewImage : function(el,left,top) {
 
-		var div =  jQuery(el).parents(".image").children(".image_preview")
+		var div =  jQuery(el).parents(".image").children(".image_preview");
 
 		div.html("<a href=\"#\"><img src=\""+jQuery(el).val()+"\" /></a><span>Click & drag image to reposition</span>");
 		jQuery(div).children("a").css({"width":jQuery("#width").val()+"px","height":jQuery("#height").val()+"px"});
 		jQuery(div).find("img").css({"left":left, "top":top});
 
 
-		jQuery(el).parent().parents(".image").css({"height":(parseInt(jQuery("#height").val()) +25)+"px"})
+		jQuery(el).parent().parents(".image").css({"height":(parseInt(jQuery("#height").val(), 10) +25)+"px"});
 
-		var ratio = jQuery(div).find("img").width()/jQuery(div).find("img").height()
+		var ratio = jQuery(div).find("img").width()/jQuery(div).find("img").height();
 
-		var Img = new Image()
+		var Img = new Image();
 		Img.src=jQuery(div).find("img").attr("src");
 
 		var width = Img.width;
 		var height = Img.height;
-		var ratio = width/height;
-		if (((jQuery("#width").val()*2)/ratio)<jQuery("#height").val()) { 
-			jQuery(div).find("img").css({"height":jQuery("#height").val()*2+"px"})
+		
+		ratio = width/height;
+		if (((jQuery("#width").val()*2)/ratio)<jQuery("#height").val()) {
+			jQuery(div).find("img").css({"height":jQuery("#height").val()*2+"px"});
 		} else {
-			jQuery(div).find("img").css({"width":"200px"})
+			jQuery(div).find("img").css({"width":"200px"});
 		}
 		jQuery(div).find("img").draggable({
 
 			scroll: false ,
 			stop: function(event, ui) {
-				jQuery(el).parents(".image").children("input.x").attr("value",ui.position.left)
-				jQuery(el).parents(".image").children("input.y").attr("value",ui.position.top)
+				jQuery(el).parents(".image").children("input.x").attr("value",ui.position.left);
+				jQuery(el).parents(".image").children("input.y").attr("value",ui.position.top);
 			}
 		});
 	},
@@ -382,8 +398,7 @@ var GalleryDialog = {
 		}
 
 	}
-}
-
+};
 
 GalleryDialog.preInit();
 tinyMCEPopup.onInit.add(GalleryDialog.init, GalleryDialog);
